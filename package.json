@@ -1,0 +1,29 @@
+{
+  "name": "hdoc",
+  "version": "0.1.0",
+  "description": "HTML-based document builder with page-based architecture",
+  "bin": {
+    "hdoc": "./bin/hdoc.js"
+  },
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "html",
+    "document",
+    "builder",
+    "cli",
+    "pages"
+  ],
+  "author": "statpan",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.0.0",
+    "fs-extra": "^11.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
