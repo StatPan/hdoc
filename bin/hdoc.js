@@ -22,6 +22,7 @@ program
 program
   .command('build')
   .description('build the document from pages')
+  .option('-w, --watch', 'watch for changes and rebuild')
   .action(buildCommand);
 
 program

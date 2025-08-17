@@ -130,6 +130,25 @@ hdoc build
 
 Outputs: `dist/document.html`
 
+### `hdoc export [output]`
+
+Exports the built `document.html` to another format. If the output path is not specified, it defaults to `document.pdf`.
+
+-   `-f, --format <format>`: The output format. Defaults to `pdf`. Currently, only `pdf` is supported.
+
+```bash
+# Build the document first
+hdoc build
+
+# Export to default file: document.pdf
+hdoc export
+
+# Export to a custom file name
+hdoc export my-report.pdf
+```
+
+The command automatically uses the `page.size` and `page.orientation` settings from your `.doc-config.json` when creating the PDF.
+
 ### `hdoc config [key] [value]`
 
 Manage project configuration:
@@ -242,18 +261,17 @@ Use zero-padding for proper ordering.
 
 ## PDF Generation
 
-The generated HTML is optimized for PDF conversion:
+The recommended way to generate a PDF is to use the built-in `export` command, which uses Puppeteer under the hood for high-quality output:
 
 ```bash
-# Using Chrome/Chromium
-chrome --headless --print-to-pdf=output.pdf dist/document.html
+# First, build your document
+hdoc build
 
-# Using wkhtmltopdf
-wkhtmltopdf dist/document.html output.pdf
-
-# Using Puppeteer (programmatically)
-# See examples in documentation
+# Then, export it to PDF
+hdoc export my-document.pdf
 ```
+
+This command automatically respects the page size and orientation defined in your `.doc-config.json`.
 
 ## Examples
 

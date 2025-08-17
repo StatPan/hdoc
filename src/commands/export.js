@@ -14,7 +14,17 @@ export default async function exportCommand(outputPath, options) {
     }
 
     if (format === 'pdf') {
-      await exportToPDF(htmlPath, outputPath);
+      // Read config to get page settings
+      const configPath = path.join(process.cwd(), '.doc-config.json');
+      const config = fs.existsSync(configPath) ? await fs.readJson(configPath) : {};
+      const pageConfig = config.global?.page || {};
+
+      const pdfOptions = {
+        format: pageConfig.size || 'A4',
+        landscape: pageConfig.orientation === 'landscape',
+      };
+
+      await exportToPDF(htmlPath, outputPath, pdfOptions);
     } else {
       console.error(`❌ Error: Unsupported format "${format}". Currently only "pdf" is supported.`);
       process.exit(1);
@@ -26,7 +36,7 @@ export default async function exportCommand(outputPath, options) {
   }
 }
 
-async function exportToPDF(htmlPath, outputPath) {
+async function exportToPDF(htmlPath, outputPath, pdfOptions) {
   console.log('📄 Exporting to PDF...');
   
   const browser = await puppeteer.launch({
@@ -44,7 +54,8 @@ async function exportToPDF(htmlPath, outputPath) {
     // Generate PDF with optimized settings for document printing
     await page.pdf({
       path: outputPath,
-      format: 'A4',
+      format: pdfOptions.format,
+      landscape: pdfOptions.landscape,
       printBackground: true,
       margin: {
         top: '0',
